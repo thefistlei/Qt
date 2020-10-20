@@ -27,20 +27,6 @@ Object::~Object()
 {
 }
 
-void Object::db_connect(Object* sender, const char* sig, Object* receiver, const char* slt)
-{
-	int sig_idx = find_string(sender->meta.sig_names, sig);
-	int slt_idx = find_string(receiver->meta.slts_names, slt);
-	if (sig_idx == -1 || slt_idx == -1) {
-		perror("signal or slot not found!");
-	}
-	else {
-		Connection c = { receiver, slt_idx };
-		sender->connections.insert(std::pair<int, Connection>(sig_idx, c));
-	}
-}
-
-
 static int find_string(const char * str, const char * substr)
 {
 	if (strlen(str) < strlen(substr))
@@ -60,6 +46,19 @@ static int find_string(const char * str, const char * substr)
 		pos++;
 	}
 	return -1;
+}
+
+void Object::db_connect(Object* sender, const char* sig, Object* receiver, const char* slt)
+{
+	int sig_idx = find_string(sender->meta.sig_names, sig);
+	int slt_idx = find_string(receiver->meta.slts_names, slt);
+	if (sig_idx == -1 || slt_idx == -1) {
+		perror("signal or slot not found!");
+	}
+	else {
+		Connection c = { receiver, slt_idx };
+		sender->connections.insert(std::pair<int, Connection>(sig_idx, c));
+	}
 }
 
 void Object::sig1()
