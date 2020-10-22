@@ -30,7 +30,7 @@ int main()
 	delete p2;
 
 	/*
-	输出结果为：
+	output result is:
 		double
 		class B_np
 		class D
